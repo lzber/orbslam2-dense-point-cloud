@@ -26,6 +26,8 @@
 #include <pcl/point_types.h>
 #include <pcl/filters/voxel_grid.h>
 #include <condition_variable>
+#include <pcl/io/pcd_io.h>
+#include <pcl/filters/statistical_outlier_removal.h>
 
 using namespace ORB_SLAM2;
 
@@ -35,34 +37,35 @@ public:
     typedef pcl::PointXYZRGBA PointT;
     typedef pcl::PointCloud<PointT> PointCloud;
 
-    PointCloudMapping( double resolution_ );
+    PointCloudMapping(double resolution_);
+    void SavePointCloudMap();
 
     // 插入一个keyframe，会更新一次地图
-    void insertKeyFrame( KeyFrame* kf, cv::Mat& color, cv::Mat& depth );
+    void insertKeyFrame(KeyFrame *kf, cv::Mat &color, cv::Mat &depth);
     void shutdown();
     void viewer();
 
 protected:
-    PointCloud::Ptr generatePointCloud(KeyFrame* kf, cv::Mat& color, cv::Mat& depth);
+    PointCloud::Ptr generatePointCloud(KeyFrame *kf, cv::Mat &color, cv::Mat &depth);
 
     PointCloud::Ptr globalMap;
-    shared_ptr<thread>  viewerThread;
+    shared_ptr<thread> viewerThread;
 
-    bool    shutDownFlag    =false;
-    mutex   shutDownMutex;
+    bool shutDownFlag = false;
+    mutex shutDownMutex;
 
-    condition_variable  keyFrameUpdated;
-    mutex               keyFrameUpdateMutex;
+    condition_variable keyFrameUpdated;
+    mutex keyFrameUpdateMutex;
 
     // data to generate point clouds
-    vector<KeyFrame*>       keyframes;
-    vector<cv::Mat>         colorImgs;
-    vector<cv::Mat>         depthImgs;
-    mutex                   keyframeMutex;
-    uint16_t                lastKeyframeSize =0;
+    vector<KeyFrame *> keyframes;
+    vector<cv::Mat> colorImgs;
+    vector<cv::Mat> depthImgs;
+    mutex keyframeMutex;
+    uint16_t lastKeyframeSize = 0;
 
     double resolution = 0.04;
-    pcl::VoxelGrid<PointT>  voxel;
+    pcl::VoxelGrid<PointT> voxel;
 };
 
 #endif // POINTCLOUDMAPPING_H

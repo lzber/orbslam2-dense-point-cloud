@@ -125,6 +125,9 @@ public:
     std::vector<MapPoint *> GetTrackedMapPoints();
     std::vector<cv::KeyPoint> GetTrackedKeyPointsUn();
 
+    //save pointcloudmap
+    void SavePointCloudMap();
+
 private:
     // Input sensor
     eSensor mSensor;

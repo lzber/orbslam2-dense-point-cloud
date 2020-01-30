@@ -130,3 +130,8 @@ void PointCloudMapping::viewer()
         lastKeyframeSize = N;
     }
 }
+void PointCloudMapping::SavePointCloudMap()
+{
+    pcl::io::savePCDFile("result.pcd", *globalMap);
+    cout << "PointCloudMap save finished" << endl;
+}

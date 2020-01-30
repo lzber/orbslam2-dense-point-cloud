@@ -67,6 +67,7 @@ int main(int argc, char **argv)
     cv::waitKey(0);
 
     SLAM.Shutdown();
+    SLAM.SavePointCloudMap();
 
     return 0;
 }

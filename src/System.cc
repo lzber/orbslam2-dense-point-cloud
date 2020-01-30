@@ -514,4 +514,9 @@ vector<cv::KeyPoint> System::GetTrackedKeyPointsUn()
     return mTrackedKeyPointsUn;
 }
 
+void System::SavePointCloudMap()
+{
+    mpPointCloudMapping->SavePointCloudMap();
+}
+
 } // namespace ORB_SLAM2
